@@ -1,0 +1,35 @@
+//
+//  PrefixHeader.pch
+//  iOS-Carbon-Forum
+//
+//  Created by WangShengFeng on 15/12/3.
+//  Copyright © 2015年 WangShengFeng. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#endif
+
+#import "UIColor+WSFExtension.h"
+#import "UIView+WSFExtension.h"
+
+#define WSFWeakSelf __weak typeof(self) weakSelf = self
+
+#define CBCommonBgColor [UIColor colorWithHex:@"21a1e2" andAlpha:1]
+#define CBCommonAlphaBgColor [UIColor colorWithHex:@"21a1e2" andAlpha:0.5]
+
+#define CBCommonTextColor [UIColor colorWithHex:@"333" andAlpha:1.0]
+#define CBCommonAlphaTextColor [UIColor colorWithHex:@"333" andAlpha:0.5]
+
+#define CBCommonDetailTextColor [UIColor colorWithHex:@"999" andAlpha:1.0]
+#define CBCommonAlphaDetailTextColor [UIColor colorWithHex:@"999" andAlpha:0.5]
+
+#define mainScreenWidth [UIScreen mainScreen].bounds.size.width
+#define mainScreenHeight [UIScreen mainScreen].bounds.size.height
+
+
+#endif /* PrefixHeader_pch */
