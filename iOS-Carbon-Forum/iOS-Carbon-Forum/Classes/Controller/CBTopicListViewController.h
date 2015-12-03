@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CBTopicViewController : UITableViewController
+@interface CBTopicListViewController : UITableViewController
 
 @end

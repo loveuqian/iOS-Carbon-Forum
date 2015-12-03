@@ -14,8 +14,16 @@
 #import <UIKit/UIKit.h>
 #endif
 
+//#define <#macro#>    NSString *sKey = @"12450";
+//NSString *sTime = [NSString currentTimeStamp];
+//NSString *sSecret = @"b40484df0ad979d8ba7708d24c301c38";
+#define sKey @"12450"
+#define sSecret @"b40484df0ad979d8ba7708d24c301c38"
+
 #import "UIColor+WSFExtension.h"
 #import "UIView+WSFExtension.h"
+#import "NSString+WSFExtension.h"
+#import "NSMutableDictionary+WSFExtension.h"
 
 #define WSFWeakSelf __weak typeof(self) weakSelf = self
 

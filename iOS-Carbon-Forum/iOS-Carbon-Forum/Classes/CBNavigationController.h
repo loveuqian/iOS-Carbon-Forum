@@ -1,5 +1,5 @@
 //
-//  CBTopicCell.h
+//  CBNavigationController.h
 //  iOS-Carbon-Forum
 //
 //  Created by WangShengFeng on 15/12/3.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CBTopicCell : UITableViewCell
+@interface CBNavigationController : UINavigationController
 
 @end

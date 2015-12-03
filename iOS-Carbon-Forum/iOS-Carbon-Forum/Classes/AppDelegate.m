@@ -7,9 +7,13 @@
 //
 
 #import "AppDelegate.h"
-#import "CBTopicViewController.h"
+#import "CBNavigationController.h"
+#import "CBTopicListViewController.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) CBNavigationController *navVC;
+@property (nonatomic, strong) CBTopicListViewController *topicVC;
 
 @end
 
@@ -24,10 +28,25 @@
     return _window;
 }
 
+- (CBNavigationController *)navVC
+{
+    if (!_navVC) {
+        _navVC = [[CBNavigationController alloc] initWithRootViewController:self.topicVC];
+    }
+    return _navVC;
+}
+
+- (CBTopicListViewController *)topicVC
+{
+    if (!_topicVC) {
+        _topicVC = [[CBTopicListViewController alloc] init];
+    }
+    return _topicVC;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    CBTopicViewController *tableVC = [[CBTopicViewController alloc] init];
-    self.window.rootViewController = tableVC;
+    self.window.rootViewController = self.navVC;
 
     return YES;
 }

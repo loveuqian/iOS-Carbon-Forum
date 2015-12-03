@@ -1,5 +1,5 @@
 //
-//  UIColor+WSFExtension.h
+//  CBLoginViewController.h
 //  iOS-Carbon-Forum
 //
 //  Created by WangShengFeng on 15/12/3.
@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIColor (WSFExtension)
-
-+ (UIColor *)randomColor;
-
-+ (instancetype)colorWithHex:(NSString*)hex andAlpha:(CGFloat)alpha;
+@interface CBLoginViewController : UIViewController
 
 @end

@@ -1,8 +1,8 @@
 //
 //  UIColor+WSFExtension.m
-//  不得姐
+//  iOS-Carbon-Forum
 //
-//  Created by WangShengFeng on 15/9/2.
+//  Created by WangShengFeng on 15/12/3.
 //  Copyright © 2015年 WangShengFeng. All rights reserved.
 //
 

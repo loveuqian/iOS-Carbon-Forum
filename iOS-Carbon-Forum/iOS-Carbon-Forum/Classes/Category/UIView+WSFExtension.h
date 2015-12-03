@@ -1,8 +1,8 @@
 //
 //  UIView+WSFExtension.h
-//  JIE
+//  iOS-Carbon-Forum
 //
-//  Created by WangShengFeng on 15/10/11.
+//  Created by WangShengFeng on 15/12/3.
 //  Copyright © 2015年 WangShengFeng. All rights reserved.
 //
 
