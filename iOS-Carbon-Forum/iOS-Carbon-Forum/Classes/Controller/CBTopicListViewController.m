@@ -19,7 +19,9 @@
 
 @property (nonatomic, strong) AFHTTPSessionManager *manager;
 
-@property (nonatomic, strong) NSArray *topicListArr;
+@property (nonatomic, strong) NSMutableArray *topicListArr;
+
+@property (nonatomic, assign) int page;
 
 @end
 
@@ -29,7 +31,7 @@
 {
     if (!_manager) {
         _manager = [AFHTTPSessionManager manager];
-        //        _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+        //        _manager.securityPolicy.allowInvalidCertificates = YES;
     }
     return _manager;
 }
@@ -45,7 +47,7 @@
 - (void)setupNav
 {
     self.title = @"主题";
-    
+
     self.navigationItem.leftBarButtonItem.title = @"123";
 }
 
@@ -54,19 +56,22 @@
     UIImage *img = [UIImage imageNamed:@"CBBackground"];
     UIImageView *imgView = [[UIImageView alloc] initWithImage:img];
     self.tableView.backgroundView = imgView;
-    self.tableView.tableHeaderView = [[UIView alloc] init];
+
     self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 
     self.tableView.mj_header =
         [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadTopicList)];
     [self.tableView.mj_header beginRefreshing];
+
+    self.tableView.mj_footer =
+        [MJRefreshAutoStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopicList)];
 }
 
 - (void)loadTopicList
 {
-    NSString *str = @"http://api.loveuqian.xyz/page/1";
-
+    self.page = 1;
+    NSString *str = [NSString stringWithFormat:@"https://api.94cb.com/page/%d", self.page];
     WSFWeakSelf;
     [self.manager GET:str
         parameters:[NSMutableDictionary getAPIAuthParams]
@@ -78,17 +83,24 @@
         failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
             [weakSelf.tableView.mj_header endRefreshing];
         }];
-    
+}
+
+- (void)loadMoreTopicList
+{
+    ++self.page;
+    NSString *str = [NSString stringWithFormat:@"https://api.94cb.com/page/%d", self.page];
+    WSFWeakSelf;
     [self.manager GET:str
-           parameters:[NSMutableDictionary getAPIAuthParams]
-              success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-                  weakSelf.topicListArr = [CBTopicListModel mj_objectArrayWithKeyValuesArray:responseObject[@"TopicsArray"]];
-                  [weakSelf.tableView reloadData];
-                  [weakSelf.tableView.mj_header endRefreshing];
-              }
-              failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
-                  [weakSelf.tableView.mj_header endRefreshing];
-              }];
+        parameters:[NSMutableDictionary getAPIAuthParams]
+        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
+            [weakSelf.topicListArr
+                addObjectsFromArray:[CBTopicListModel mj_objectArrayWithKeyValuesArray:responseObject[@"TopicsArray"]]];
+            [weakSelf.tableView reloadData];
+            [weakSelf.tableView.mj_header endRefreshing];
+        }
+        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
+            [weakSelf.tableView.mj_header endRefreshing];
+        }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
