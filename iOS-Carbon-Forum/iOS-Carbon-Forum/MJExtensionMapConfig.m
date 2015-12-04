@@ -13,13 +13,4 @@
 
 @implementation MJExtensionMapConfig
 
-+ (void)load
-{
-    [CBTopicListModel mj_setupReplacedKeyFromPropertyName:^NSDictionary *{
-        return @{
-            @"ID" : @"id",
-        };
-    }];
-}
-
 @end

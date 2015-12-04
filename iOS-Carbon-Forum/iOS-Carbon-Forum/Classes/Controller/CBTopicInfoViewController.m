@@ -8,6 +8,8 @@
 
 #import "CBTopicInfoViewController.h"
 #import "CBTopicListModel.h"
+#import "CBNetworkTool.h"
+#import "CBPostModel.h"
 
 #import <AFNetworking.h>
 #import <MJRefresh.h>
@@ -15,27 +17,43 @@
 
 @interface CBTopicInfoViewController ()
 
-@property (nonatomic, strong) AFHTTPSessionManager *manager;
+@property (nonatomic, strong) CBNetworkTool *manager;
 
-@property (nonatomic, strong) NSArray *topicInfoArr;
+@property (nonatomic, strong) NSArray *postArr;
+
+@property (nonatomic, assign) int page;
 
 @end
 
 @implementation CBTopicInfoViewController
 
+- (CBNetworkTool *)manager
+{
+    if (!_manager) {
+        _manager = [CBNetworkTool shareNetworkTool];
+    }
+    return _manager;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self setupNav];
 
     [self setupTableView];
 }
 
 - (void)setupNav
 {
+    self.title = self.model.Topic;
 }
 
 - (void)setupTableView
 {
+    self.tableView.estimatedRowHeight = 100;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+
     self.tableView.mj_header =
         [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadTopicInfo)];
     [self.tableView.mj_header beginRefreshing];
@@ -43,21 +61,43 @@
 
 - (void)loadTopicInfo
 {
-//    WSFWeakSelf;
+    [self.manager.operationQueue cancelAllOperations];
 
-//    NSString *url = [NSString stringWithFormat:@"https://api.94cb.com/t/%@-1", self.model.ID];
+    self.page = 1;
+    NSString *str = [NSString stringWithFormat:@"t/%@-%d", self.model.ID, self.page];
+    NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
+    [params addEntriesFromDictionary:[NSMutableDictionary getUserAuthParams]];
 
+    WSFWeakSelf;
+    [self.manager GET:str
+        parameters:params
+        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
+            weakSelf.postArr = [CBPostModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]];
+            [weakSelf.tableView reloadData];
+            [weakSelf.tableView.mj_header endRefreshing];
+        }
+        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
+            NSLog(@"%@", error);
+            [weakSelf.tableView.mj_header endRefreshing];
+        }];
 }
 
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    return self.topicInfoArr.count;
-//}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.postArr.count;
+}
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    UITableViewCell *cell = [[UITableViewCell alloc] init];
-//    return cell;
-//}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+    CBPostModel *model = self.postArr[indexPath.row];
+    cell.textLabel.text = model.Content;
+    cell.textLabel.numberOfLines = 0;
+    cell.detailTextLabel.text = model.UserName;
+
+    NSString *str = model.Content;
+
+    return cell;
+}
 
 @end

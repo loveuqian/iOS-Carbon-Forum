@@ -43,16 +43,26 @@
                         <action selector="loginBtnClick:" destination="-1" eventType="touchUpInside" id="3mv-Nf-ycW"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhD-Es-bdx">
+                    <rect key="frame" x="281" y="196" width="39" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Close"/>
+                    <connections>
+                        <action selector="closeBtnClick:" destination="-1" eventType="touchUpInside" id="vKE-AN-xBD"/>
+                    </connections>
+                </button>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="DHA-SQ-BKO" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Hje-Zb-cug"/>
+                <constraint firstItem="f2X-2D-iF4" firstAttribute="top" secondItem="QhD-Es-bdx" secondAttribute="bottom" constant="10" id="V2m-t0-P25"/>
                 <constraint firstItem="kxi-V1-h9Z" firstAttribute="top" secondItem="f2X-2D-iF4" secondAttribute="bottom" constant="10" id="oSe-pa-HuH"/>
                 <constraint firstItem="f2X-2D-iF4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="rte-gO-IkW"/>
                 <constraint firstItem="f2X-2D-iF4" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="sIB-gc-Vya"/>
                 <constraint firstItem="DHA-SQ-BKO" firstAttribute="top" secondItem="kxi-V1-h9Z" secondAttribute="bottom" constant="10" id="tBe-1z-nDg"/>
                 <constraint firstItem="kxi-V1-h9Z" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="vDB-AA-sk9"/>
+                <constraint firstItem="QhD-Es-bdx" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zYf-qO-n4c"/>
             </constraints>
         </view>
     </objects>

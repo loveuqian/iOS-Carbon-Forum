@@ -38,7 +38,7 @@
 {
     [super viewDidLoad];
 
-    NSString *urlStr = @"https://api.94cb.com/seccode.php";
+    NSString *urlStr = [NSString stringWithFormat:@"%@seccode.php", baseUrl];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithURL:[NSURL URLWithString:urlStr]
                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -49,8 +49,23 @@
     [task resume];
 }
 
+- (void)dealloc
+{
+    [self.manager.operationQueue cancelAllOperations];
+}
+
+- (IBAction)closeBtnClick:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)loginBtnClick:(UIButton *)sender
 {
+    if (!self.verifyCodeTextField.text) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
+
     NSString *str = @"login";
     NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
     [params setObject:@"loveuqian" forKey:@"UserName"];
@@ -61,9 +76,9 @@
     [self.manager POST:str
         parameters:params
         success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            weakSelf.userAuthArr = [CBUserAuthModel mj_objectArrayWithKeyValuesArray:responseObject];
-            CBUserAuthModel *model = weakSelf.userAuthArr.firstObject;
-            [[NSUserDefaults standardUserDefaults] setObject:model forKey:CBUserAuth];
+            CBUserAuthModel *model = [CBUserAuthModel mj_objectWithKeyValues:responseObject];
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:CBUserAuth];
             [[NSUserDefaults standardUserDefaults] synchronize];
             [weakSelf dismissViewControllerAnimated:YES completion:nil];
         }

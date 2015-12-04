@@ -28,6 +28,9 @@
 		3787F3CC1C0FF34E00926AE4 /* CBTopicListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3787F3CA1C0FF34E00926AE4 /* CBTopicListCell.xib */; };
 		3787F48E1C119E1B00926AE4 /* CBUserAuthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3787F48D1C119E1B00926AE4 /* CBUserAuthModel.m */; };
 		3787F4911C119F0600926AE4 /* CBNetworkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3787F4901C119F0600926AE4 /* CBNetworkTool.m */; };
+		37E6C42E1C11D0380088F3C6 /* CBPostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E6C42D1C11D0380088F3C6 /* CBPostModel.m */; };
+		37E6C4381C11D50F0088F3C6 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E6C4371C11D50F0088F3C6 /* libxml2.tbd */; };
+		37E6C43A1C11D55E0088F3C6 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E6C4391C11D55E0088F3C6 /* libxml2.2.tbd */; };
 		42E2A887D1C0713370F53462 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1E7B49B1EF0AC51D65162 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +74,10 @@
 		3787F48D1C119E1B00926AE4 /* CBUserAuthModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBUserAuthModel.m; sourceTree = "<group>"; };
 		3787F48F1C119F0600926AE4 /* CBNetworkTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBNetworkTool.h; sourceTree = "<group>"; };
 		3787F4901C119F0600926AE4 /* CBNetworkTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBNetworkTool.m; sourceTree = "<group>"; };
+		37E6C42C1C11D0380088F3C6 /* CBPostModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPostModel.h; sourceTree = "<group>"; };
+		37E6C42D1C11D0380088F3C6 /* CBPostModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPostModel.m; sourceTree = "<group>"; };
+		37E6C4371C11D50F0088F3C6 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		37E6C4391C11D55E0088F3C6 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
 		5EB3E4DBE7B964CB573D3169 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A7256AEF365262D61E0554D3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37E6C43A1C11D55E0088F3C6 /* libxml2.2.tbd in Frameworks */,
+				37E6C4381C11D50F0088F3C6 /* libxml2.tbd in Frameworks */,
 				42E2A887D1C0713370F53462 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,6 +159,7 @@
 				3787F3C41C0FF33800926AE4 /* Model */,
 				3787F3C51C0FF33800926AE4 /* View */,
 				3787F3511C0FEF2C00926AE4 /* Category */,
+				37E6C4301C11D4BF0088F3C6 /* Tool */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -192,6 +202,8 @@
 				3707232E1C10887E00304C7D /* CBTopicListModel.m */,
 				3787F48C1C119E1B00926AE4 /* CBUserAuthModel.h */,
 				3787F48D1C119E1B00926AE4 /* CBUserAuthModel.m */,
+				37E6C42C1C11D0380088F3C6 /* CBPostModel.h */,
+				37E6C42D1C11D0380088F3C6 /* CBPostModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -206,9 +218,18 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		37E6C4301C11D4BF0088F3C6 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
 		A0B30F31FABD4C51F91256E0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				37E6C4391C11D55E0088F3C6 /* libxml2.2.tbd */,
+				37E6C4371C11D50F0088F3C6 /* libxml2.tbd */,
 				00B1E7B49B1EF0AC51D65162 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -343,6 +364,7 @@
 				370723401C108DB300304C7D /* CBTopicInfoViewController.m in Sources */,
 				370723361C108C0D00304C7D /* CBNavigationController.m in Sources */,
 				3787F48E1C119E1B00926AE4 /* CBUserAuthModel.m in Sources */,
+				37E6C42E1C11D0380088F3C6 /* CBPostModel.m in Sources */,
 				3787F4911C119F0600926AE4 /* CBNetworkTool.m in Sources */,
 				3787F32F1C0FDE1200926AE4 /* main.m in Sources */,
 				376823D51C108420008D4BB4 /* NSString+WSFExtension.m in Sources */,
@@ -447,6 +469,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PREFIX_HEADER = "iOS-Carbon-Forum/PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/MJExtension\"",
+					"\"${PODS_ROOT}/Headers/Public/MJRefresh\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+				);
 				INFOPLIST_FILE = "iOS-Carbon-Forum/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.loveuqian.iOS-Carbon-Forum";
@@ -461,6 +491,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PREFIX_HEADER = "iOS-Carbon-Forum/PrefixHeader.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/MJExtension\"",
+					"\"${PODS_ROOT}/Headers/Public/MJRefresh\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+				);
 				INFOPLIST_FILE = "iOS-Carbon-Forum/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.loveuqian.iOS-Carbon-Forum";

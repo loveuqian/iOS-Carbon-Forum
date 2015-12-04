@@ -109,6 +109,7 @@
         }
         failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
             [weakSelf.tableView.mj_header endRefreshing];
+            NSLog(@"%@", error);
         }];
 }
 
@@ -117,7 +118,6 @@
     [self.manager.operationQueue cancelAllOperations];
 
     ++self.page;
-    NSLog(@"%d", self.page);
     NSString *str = [NSString stringWithFormat:@"page/%d", self.page];
     WSFWeakSelf;
     [self.manager GET:str
@@ -144,7 +144,7 @@
     CBTopicListModel *model = self.topicListArr[indexPath.row];
     cell.textLabel.text = model.Topic;
     cell.textLabel.numberOfLines = 0;
-    cell.detailTextLabel.text = model.LastName;
+    cell.detailTextLabel.text = model.UserName;
 
     return cell;
 }
@@ -154,6 +154,7 @@
     CBTopicListModel *model = self.topicListArr[indexPath.row];
     CBTopicInfoViewController *infoVC = [[CBTopicInfoViewController alloc] init];
     infoVC.model = model;
+    NSLog(@"%@", model.ID);
 
     [self.navigationController pushViewController:infoVC animated:YES];
 }
