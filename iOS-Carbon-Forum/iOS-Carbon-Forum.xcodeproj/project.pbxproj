@@ -26,6 +26,8 @@
 		3787F3C71C0FF33800926AE4 /* CBTopicListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3787F3C31C0FF33800926AE4 /* CBTopicListViewController.xib */; };
 		3787F3CB1C0FF34E00926AE4 /* CBTopicListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3787F3C91C0FF34E00926AE4 /* CBTopicListCell.m */; };
 		3787F3CC1C0FF34E00926AE4 /* CBTopicListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3787F3CA1C0FF34E00926AE4 /* CBTopicListCell.xib */; };
+		3787F48E1C119E1B00926AE4 /* CBUserAuthModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3787F48D1C119E1B00926AE4 /* CBUserAuthModel.m */; };
+		3787F4911C119F0600926AE4 /* CBNetworkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3787F4901C119F0600926AE4 /* CBNetworkTool.m */; };
 		42E2A887D1C0713370F53462 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1E7B49B1EF0AC51D65162 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,10 @@
 		3787F3C81C0FF34E00926AE4 /* CBTopicListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBTopicListCell.h; sourceTree = "<group>"; };
 		3787F3C91C0FF34E00926AE4 /* CBTopicListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBTopicListCell.m; sourceTree = "<group>"; };
 		3787F3CA1C0FF34E00926AE4 /* CBTopicListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CBTopicListCell.xib; sourceTree = "<group>"; };
+		3787F48C1C119E1B00926AE4 /* CBUserAuthModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBUserAuthModel.h; sourceTree = "<group>"; };
+		3787F48D1C119E1B00926AE4 /* CBUserAuthModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBUserAuthModel.m; sourceTree = "<group>"; };
+		3787F48F1C119F0600926AE4 /* CBNetworkTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBNetworkTool.h; sourceTree = "<group>"; };
+		3787F4901C119F0600926AE4 /* CBNetworkTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBNetworkTool.m; sourceTree = "<group>"; };
 		5EB3E4DBE7B964CB573D3169 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A7256AEF365262D61E0554D3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +123,8 @@
 				3787F3591C0FEF5F00926AE4 /* PrefixHeader.pch */,
 				370723301C1088C500304C7D /* MJExtensionMapConfig.h */,
 				370723311C1088C500304C7D /* MJExtensionMapConfig.m */,
+				3787F48F1C119F0600926AE4 /* CBNetworkTool.h */,
+				3787F4901C119F0600926AE4 /* CBNetworkTool.m */,
 				3787F32D1C0FDE1200926AE4 /* Supporting Files */,
 			);
 			path = "iOS-Carbon-Forum";
@@ -182,6 +190,8 @@
 			children = (
 				3707232D1C10887E00304C7D /* CBTopicListModel.h */,
 				3707232E1C10887E00304C7D /* CBTopicListModel.m */,
+				3787F48C1C119E1B00926AE4 /* CBUserAuthModel.h */,
+				3787F48D1C119E1B00926AE4 /* CBUserAuthModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -332,6 +342,8 @@
 				3787F3551C0FEF2C00926AE4 /* AppDelegate.m in Sources */,
 				370723401C108DB300304C7D /* CBTopicInfoViewController.m in Sources */,
 				370723361C108C0D00304C7D /* CBNavigationController.m in Sources */,
+				3787F48E1C119E1B00926AE4 /* CBUserAuthModel.m in Sources */,
+				3787F4911C119F0600926AE4 /* CBNetworkTool.m in Sources */,
 				3787F32F1C0FDE1200926AE4 /* main.m in Sources */,
 				376823D51C108420008D4BB4 /* NSString+WSFExtension.m in Sources */,
 				3787F3BE1C0FF22000926AE4 /* UIColor+WSFExtension.m in Sources */,

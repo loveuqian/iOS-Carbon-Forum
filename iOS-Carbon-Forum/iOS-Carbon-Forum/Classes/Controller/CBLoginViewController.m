@@ -7,31 +7,69 @@
 //
 
 #import "CBLoginViewController.h"
+#import "CBUserAuthModel.h"
+#import "CBNetworkTool.h"
+#import "CBUserAuthModel.h"
+
+#import <AFNetworking.h>
+#import <MJExtension.h>
 
 @interface CBLoginViewController ()
+
+@property (nonatomic, strong) CBNetworkTool *manager;
+
+@property (weak, nonatomic) IBOutlet UIImageView *verifyCodeImageView;
+@property (weak, nonatomic) IBOutlet UITextField *verifyCodeTextField;
+
+@property (nonatomic, strong) NSArray *userAuthArr;
 
 @end
 
 @implementation CBLoginViewController
 
-- (void)viewDidLoad {
+- (CBNetworkTool *)manager
+{
+    if (!_manager) {
+        _manager = [CBNetworkTool shareNetworkTool];
+    }
+    return _manager;
+}
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
+    NSString *urlStr = @"https://api.94cb.com/seccode.php";
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *task = [session dataTaskWithURL:[NSURL URLWithString:urlStr]
+                                        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                self.verifyCodeImageView.image = [UIImage imageWithData:data];
+                                            });
+                                        }];
+    [task resume];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+- (IBAction)loginBtnClick:(UIButton *)sender
+{
+    NSString *str = @"login";
+    NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
+    [params setObject:@"loveuqian" forKey:@"UserName"];
+    [params setObject:[@"asdfghjkl" MD5Digest] forKey:@"Password"];
+    [params setObject:self.verifyCodeTextField.text forKey:@"VerifyCode"];
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    WSFWeakSelf;
+    [self.manager POST:str
+        parameters:params
+        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
+            weakSelf.userAuthArr = [CBUserAuthModel mj_objectArrayWithKeyValuesArray:responseObject];
+            CBUserAuthModel *model = weakSelf.userAuthArr.firstObject;
+            [[NSUserDefaults standardUserDefaults] setObject:model forKey:CBUserAuth];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        }
+        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
+            NSLog(@"%@", error);
+        }];
 }
-*/
 
 @end

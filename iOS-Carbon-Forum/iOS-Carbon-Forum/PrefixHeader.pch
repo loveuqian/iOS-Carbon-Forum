@@ -14,11 +14,14 @@
 #import <UIKit/UIKit.h>
 #endif
 
-//#define <#macro#>    NSString *sKey = @"12450";
-//NSString *sTime = [NSString currentTimeStamp];
-//NSString *sSecret = @"b40484df0ad979d8ba7708d24c301c38";
+#define baseUrl @"https://api.94cb.com/"
+
 #define sKey @"12450"
 #define sSecret @"b40484df0ad979d8ba7708d24c301c38"
+
+#define CBUserAuth @"UserAuthentication"
+
+#import "CBNetworkTool.h"
 
 #import "UIColor+WSFExtension.h"
 #import "UIView+WSFExtension.h"

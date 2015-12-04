@@ -12,4 +12,6 @@
 
 + (instancetype)getAPIAuthParams;
 
++ (instancetype)getUserAuthParams;
+
 @end

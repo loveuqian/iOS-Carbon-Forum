@@ -26,6 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    [self setupTableView];
 }
 
 - (void)setupNav
@@ -41,34 +43,21 @@
 
 - (void)loadTopicInfo
 {
-    WSFWeakSelf;
+//    WSFWeakSelf;
 
-    NSString *url = [NSString stringWithFormat:@"http://api.loveuqian.xyz/t/%@-1", self.model.ID];
-    
-    NSMutableDictionary *dict = [NSMutableDictionary getAPIAuthParams];
+//    NSString *url = [NSString stringWithFormat:@"https://api.94cb.com/t/%@-1", self.model.ID];
 
-    [self.manager GET:url
-        parameters:nil
-        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            NSLog(@"%@", responseObject);
-            [weakSelf.tableView reloadData];
-            [weakSelf.tableView.mj_header endRefreshing];
-        }
-        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
-            NSLog(@"%@", error);
-            [weakSelf.tableView.mj_header endRefreshing];
-        }];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.topicInfoArr.count;
-}
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//    return self.topicInfoArr.count;
+//}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-    return cell;
-}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UITableViewCell *cell = [[UITableViewCell alloc] init];
+//    return cell;
+//}
 
 @end

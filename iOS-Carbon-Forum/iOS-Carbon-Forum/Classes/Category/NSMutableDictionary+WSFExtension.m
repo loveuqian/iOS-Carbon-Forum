@@ -7,6 +7,7 @@
 //
 
 #import "NSMutableDictionary+WSFExtension.h"
+#import "CBUserAuthModel.h"
 
 @implementation NSMutableDictionary (WSFExtension)
 
@@ -20,6 +21,18 @@
     [mDict setObject:sKey forKey:@"SKey"];
     [mDict setObject:sTime forKey:@"STime"];
     [mDict setObject:sValueMD5 forKey:@"SValue"];
+
+    return mDict;
+}
+
++ (instancetype)getUserAuthParams
+{
+    CBUserAuthModel *model = [[NSUserDefaults standardUserDefaults] objectForKey:CBUserAuth];
+    
+    NSMutableDictionary *mDict = [NSMutableDictionary dictionary];
+    [mDict setObject:model.UserID forKey:@"AuthUserID"];
+    [mDict setObject:model.UserExpirationTime forKey:@"AuthUserExpirationTime"];
+    [mDict setObject:model.UserCode forKey:@"AuthUserCode"];
 
     return mDict;
 }

@@ -10,6 +10,8 @@
 #import "CBTopicListModel.h"
 #import "CBTopicListCell.h"
 #import "CBTopicInfoViewController.h"
+#import "CBLoginViewController.h"
+#import "CBNetworkTool.h"
 
 #import <AFNetworking.h>
 #import <MJRefresh.h>
@@ -17,7 +19,7 @@
 
 @interface CBTopicListViewController ()
 
-@property (nonatomic, strong) AFHTTPSessionManager *manager;
+@property (nonatomic, strong) CBNetworkTool *manager;
 
 @property (nonatomic, strong) NSMutableArray *topicListArr;
 
@@ -27,13 +29,20 @@
 
 @implementation CBTopicListViewController
 
-- (AFHTTPSessionManager *)manager
+- (CBNetworkTool *)manager
 {
     if (!_manager) {
-        _manager = [AFHTTPSessionManager manager];
-        //        _manager.securityPolicy.allowInvalidCertificates = YES;
+        _manager = [CBNetworkTool shareNetworkTool];
     }
     return _manager;
+}
+
+- (NSMutableArray *)topicListArr
+{
+    if (!_topicListArr) {
+        _topicListArr = [NSMutableArray array];
+    }
+    return _topicListArr;
 }
 
 - (void)viewDidLoad
@@ -41,14 +50,30 @@
     [super viewDidLoad];
 
     [self setupNav];
+
     [self setupTableView];
+}
+
+- (void)dealloc
+{
+    [self.manager.operationQueue cancelAllOperations];
 }
 
 - (void)setupNav
 {
     self.title = @"主题";
 
-    self.navigationItem.leftBarButtonItem.title = @"123";
+    UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [loginButton setImage:[UIImage imageNamed:@"setting_personal"] forState:UIControlStateNormal];
+    [loginButton sizeToFit];
+    [loginButton addTarget:self action:@selector(loginButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:loginButton];
+}
+
+- (void)loginButtonClick
+{
+    CBLoginViewController *loginVC = [[CBLoginViewController alloc] init];
+    [self presentViewController:loginVC animated:YES completion:nil];
 }
 
 - (void)setupTableView
@@ -65,13 +90,15 @@
     [self.tableView.mj_header beginRefreshing];
 
     self.tableView.mj_footer =
-        [MJRefreshAutoStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopicList)];
+        [MJRefreshBackStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopicList)];
 }
 
 - (void)loadTopicList
 {
+    [self.manager.operationQueue cancelAllOperations];
+
     self.page = 1;
-    NSString *str = [NSString stringWithFormat:@"https://api.94cb.com/page/%d", self.page];
+    NSString *str = [NSString stringWithFormat:@"page/%d", self.page];
     WSFWeakSelf;
     [self.manager GET:str
         parameters:[NSMutableDictionary getAPIAuthParams]
@@ -87,19 +114,22 @@
 
 - (void)loadMoreTopicList
 {
+    [self.manager.operationQueue cancelAllOperations];
+
     ++self.page;
-    NSString *str = [NSString stringWithFormat:@"https://api.94cb.com/page/%d", self.page];
+    NSLog(@"%d", self.page);
+    NSString *str = [NSString stringWithFormat:@"page/%d", self.page];
     WSFWeakSelf;
     [self.manager GET:str
         parameters:[NSMutableDictionary getAPIAuthParams]
         success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            [weakSelf.topicListArr
-                addObjectsFromArray:[CBTopicListModel mj_objectArrayWithKeyValuesArray:responseObject[@"TopicsArray"]]];
+            NSArray *newArr = [CBTopicListModel mj_objectArrayWithKeyValuesArray:responseObject[@"TopicsArray"]];
+            [weakSelf.topicListArr addObjectsFromArray:newArr];
             [weakSelf.tableView reloadData];
-            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.tableView.mj_footer endRefreshing];
         }
         failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
-            [weakSelf.tableView.mj_header endRefreshing];
+            [weakSelf.tableView.mj_footer endRefreshing];
         }];
 }
 
@@ -110,12 +140,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CBTopicListCell *cell = [[CBTopicListCell alloc] init];
+    CBTopicListCell *cell = [[CBTopicListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
     CBTopicListModel *model = self.topicListArr[indexPath.row];
     cell.textLabel.text = model.Topic;
     cell.textLabel.numberOfLines = 0;
+    cell.detailTextLabel.text = model.LastName;
 
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CBTopicListModel *model = self.topicListArr[indexPath.row];
+    CBTopicInfoViewController *infoVC = [[CBTopicInfoViewController alloc] init];
+    infoVC.model = model;
+
+    [self.navigationController pushViewController:infoVC animated:YES];
 }
 
 @end
