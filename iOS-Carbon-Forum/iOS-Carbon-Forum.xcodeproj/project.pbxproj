@@ -31,6 +31,8 @@
 		37E6C42E1C11D0380088F3C6 /* CBPostModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E6C42D1C11D0380088F3C6 /* CBPostModel.m */; };
 		37E6C4381C11D50F0088F3C6 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E6C4371C11D50F0088F3C6 /* libxml2.tbd */; };
 		37E6C43A1C11D55E0088F3C6 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E6C4391C11D55E0088F3C6 /* libxml2.2.tbd */; };
+		37E6C4A11C11ED500088F3C6 /* CBTopicInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E6C49F1C11ED500088F3C6 /* CBTopicInfoCell.m */; };
+		37E6C4A21C11ED500088F3C6 /* CBTopicInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37E6C4A01C11ED500088F3C6 /* CBTopicInfoCell.xib */; };
 		42E2A887D1C0713370F53462 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1E7B49B1EF0AC51D65162 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +80,9 @@
 		37E6C42D1C11D0380088F3C6 /* CBPostModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPostModel.m; sourceTree = "<group>"; };
 		37E6C4371C11D50F0088F3C6 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		37E6C4391C11D55E0088F3C6 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		37E6C49E1C11ED500088F3C6 /* CBTopicInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBTopicInfoCell.h; sourceTree = "<group>"; };
+		37E6C49F1C11ED500088F3C6 /* CBTopicInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBTopicInfoCell.m; sourceTree = "<group>"; };
+		37E6C4A01C11ED500088F3C6 /* CBTopicInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CBTopicInfoCell.xib; sourceTree = "<group>"; };
 		5EB3E4DBE7B964CB573D3169 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A7256AEF365262D61E0554D3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -214,6 +219,9 @@
 				3787F3C81C0FF34E00926AE4 /* CBTopicListCell.h */,
 				3787F3C91C0FF34E00926AE4 /* CBTopicListCell.m */,
 				3787F3CA1C0FF34E00926AE4 /* CBTopicListCell.xib */,
+				37E6C49E1C11ED500088F3C6 /* CBTopicInfoCell.h */,
+				37E6C49F1C11ED500088F3C6 /* CBTopicInfoCell.m */,
+				37E6C4A01C11ED500088F3C6 /* CBTopicInfoCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -300,6 +308,7 @@
 				3787F3C71C0FF33800926AE4 /* CBTopicListViewController.xib in Resources */,
 				370723411C108DB300304C7D /* CBTopicInfoViewController.xib in Resources */,
 				3787F3CC1C0FF34E00926AE4 /* CBTopicListCell.xib in Resources */,
+				37E6C4A21C11ED500088F3C6 /* CBTopicInfoCell.xib in Resources */,
 				3787F33A1C0FDE1200926AE4 /* Assets.xcassets in Resources */,
 				370723461C10901A00304C7D /* CBLoginViewController.xib in Resources */,
 			);
@@ -368,6 +377,7 @@
 				3787F4911C119F0600926AE4 /* CBNetworkTool.m in Sources */,
 				3787F32F1C0FDE1200926AE4 /* main.m in Sources */,
 				376823D51C108420008D4BB4 /* NSString+WSFExtension.m in Sources */,
+				37E6C4A11C11ED500088F3C6 /* CBTopicInfoCell.m in Sources */,
 				3787F3BE1C0FF22000926AE4 /* UIColor+WSFExtension.m in Sources */,
 				3787F3BF1C0FF22000926AE4 /* UIView+WSFExtension.m in Sources */,
 				370723321C1088C500304C7D /* MJExtensionMapConfig.m in Sources */,

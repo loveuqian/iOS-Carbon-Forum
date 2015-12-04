@@ -84,13 +84,16 @@
 
     self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.tableFooterView = [[UIView alloc] init];
 
     self.tableView.mj_header =
         [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadTopicList)];
     [self.tableView.mj_header beginRefreshing];
-
     self.tableView.mj_footer =
         [MJRefreshBackStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopicList)];
+
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CBTopicListCell class]) bundle:nil]
+         forCellReuseIdentifier:CBTopicListCellId];
 }
 
 - (void)loadTopicList
@@ -140,7 +143,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CBTopicListCell *cell = [[CBTopicListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
+    CBTopicListCell *cell = [tableView dequeueReusableCellWithIdentifier:CBTopicListCellId];
     CBTopicListModel *model = self.topicListArr[indexPath.row];
     cell.textLabel.text = model.Topic;
     cell.textLabel.numberOfLines = 0;
@@ -154,7 +157,6 @@
     CBTopicListModel *model = self.topicListArr[indexPath.row];
     CBTopicInfoViewController *infoVC = [[CBTopicInfoViewController alloc] init];
     infoVC.model = model;
-    NSLog(@"%@", model.ID);
 
     [self.navigationController pushViewController:infoVC animated:YES];
 }

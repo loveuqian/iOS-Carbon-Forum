@@ -1,0 +1,1 @@
+../../../NSString+Color/Classes/NSString+Color.h

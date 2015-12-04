@@ -29,12 +29,11 @@
 {
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:CBUserAuth];
     CBUserAuthModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    NSLog(@"%@", model.UserID);
 
     NSMutableDictionary *mDict = [NSMutableDictionary dictionary];
-    //    [mDict setObject:model.UserID forKey:@"AuthUserID"];
-    //    [mDict setObject:model.UserExpirationTime forKey:@"AuthUserExpirationTime"];
-    //    [mDict setObject:model.UserCode forKey:@"AuthUserCode"];
+    [mDict setObject:model.UserID forKey:@"AuthUserID"];
+    [mDict setObject:model.UserExpirationTime forKey:@"AuthUserExpirationTime"];
+    [mDict setObject:model.UserCode forKey:@"AuthUserCode"];
 
     return mDict;
 }

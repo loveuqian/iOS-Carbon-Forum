@@ -22,6 +22,9 @@
 
 #define CBUserAuth @"UserAuthentication"
 
+#define CBTopicListCellId @"CBTopicListCell"
+#define CBTopicInfoCellId @"CBTopicInfoCell"
+
 #import "CBNetworkTool.h"
 
 #import "UIColor+WSFExtension.h"
