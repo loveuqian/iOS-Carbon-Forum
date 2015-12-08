@@ -68,6 +68,12 @@
     [loginButton sizeToFit];
     [loginButton addTarget:self action:@selector(loginButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:loginButton];
+
+    UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [refreshButton setImage:[UIImage imageNamed:@"setting_refresh"] forState:UIControlStateNormal];
+    [refreshButton sizeToFit];
+    [refreshButton addTarget:self action:@selector(refreshButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
 }
 
 - (void)loginButtonClick
@@ -76,21 +82,26 @@
     [self presentViewController:loginVC animated:YES completion:nil];
 }
 
+- (void)refreshButtonClick
+{
+    [self.tableView.mj_header beginRefreshing];
+}
+
 - (void)setupTableView
 {
-    UIImage *img = [UIImage imageNamed:@"CBBackground"];
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:img];
-    self.tableView.backgroundView = imgView;
+    self.tableView.backgroundColor = CBCommonBgColor;
 
-    self.tableView.estimatedRowHeight = 100;
+    self.tableView.estimatedRowHeight = 200;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     self.tableView.mj_header =
         [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadTopicList)];
     [self.tableView.mj_header beginRefreshing];
     self.tableView.mj_footer =
         [MJRefreshBackStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopicList)];
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CBTopicListCell class]) bundle:nil]
          forCellReuseIdentifier:CBTopicListCellId];
@@ -144,16 +155,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CBTopicListCell *cell = [tableView dequeueReusableCellWithIdentifier:CBTopicListCellId];
-    CBTopicListModel *model = self.topicListArr[indexPath.row];
-    cell.textLabel.text = model.Topic;
-    cell.textLabel.numberOfLines = 0;
-    cell.detailTextLabel.text = model.UserName;
+    cell.model = self.topicListArr[indexPath.row];
 
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     CBTopicListModel *model = self.topicListArr[indexPath.row];
     CBTopicInfoViewController *infoVC = [[CBTopicInfoViewController alloc] init];
     infoVC.model = model;

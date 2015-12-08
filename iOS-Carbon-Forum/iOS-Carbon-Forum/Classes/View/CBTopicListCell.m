@@ -7,19 +7,28 @@
 //
 
 #import "CBTopicListCell.h"
+#import "CBTopicListModel.h"
+@interface CBTopicListCell ()
+
+@property (weak, nonatomic) IBOutlet UILabel *topicLabel;
+@property (weak, nonatomic) IBOutlet UILabel *lastTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *repliesLabel;
+
+@end
 
 @implementation CBTopicListCell
 
-- (void)awakeFromNib
+- (void)setModel:(CBTopicListModel *)model
 {
-    // Initialization code
-}
+    _model = model;
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
+    self.topicLabel.text = model.Topic;
+    self.lastTimeLabel.text = [NSString stringWithFormat:@"回复: %@", model.LastTime];
+    self.userNameLabel.text = model.UserName;
+    self.repliesLabel.text = [NSString stringWithFormat:@"%@回", model.Replies];
 
-    // Configure the view for the selected state
+    [self layoutSubviews];
 }
 
 @end

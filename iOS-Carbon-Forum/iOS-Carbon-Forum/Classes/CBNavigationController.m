@@ -8,30 +8,41 @@
 
 #import "CBNavigationController.h"
 
-@interface CBNavigationController ()
+@interface CBNavigationController () <UIGestureRecognizerDelegate>
 
 @end
 
 @implementation CBNavigationController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
+    self.interactivePopGestureRecognizer.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (self.childViewControllers.count >= 1) {
+        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [backButton setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+        backButton.width = 25;
+        backButton.height = 25;
+        [backButton addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+        viewController.hidesBottomBarWhenPushed = YES;
+    }
+    [super pushViewController:viewController animated:animated];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)backBtnClick
+{
+    [self popViewControllerAnimated:YES];
 }
-*/
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    return self.childViewControllers.count > 1;
+}
 
 @end

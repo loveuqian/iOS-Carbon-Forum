@@ -58,9 +58,7 @@
 
 - (void)setupTableView
 {
-    UIImage *img = [UIImage imageNamed:@"CBBackground"];
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:img];
-    self.tableView.backgroundView = imgView;
+    self.tableView.backgroundColor = CBCommonBgColor;
 
     self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -71,6 +69,7 @@
     [self.tableView.mj_header beginRefreshing];
     self.tableView.mj_footer =
         [MJRefreshBackStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreTopicInfo)];
+    self.tableView.mj_header.automaticallyChangeAlpha = YES;
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CBTopicInfoCell class]) bundle:nil]
          forCellReuseIdentifier:CBTopicInfoCellId];

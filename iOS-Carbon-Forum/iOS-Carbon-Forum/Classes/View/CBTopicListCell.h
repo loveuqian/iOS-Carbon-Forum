@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class CBTopicListModel;
+
 @interface CBTopicListCell : UITableViewCell
+
+@property (nonatomic, strong) CBTopicListModel *model;
 
 @end
