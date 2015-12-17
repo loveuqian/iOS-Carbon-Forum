@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "uiv2_close_button.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "uiv2_close_button@2x.png",
+      "filename" : "delete_sign.png",
       "scale" : "2x"
     },
     {

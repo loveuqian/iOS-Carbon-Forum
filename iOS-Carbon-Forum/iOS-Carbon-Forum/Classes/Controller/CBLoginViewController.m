@@ -23,8 +23,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *verifyCodeTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
-
+@property (weak, nonatomic) IBOutlet UIButton *accountBtn;
+@property (nonatomic, assign, getter=isLogin) BOOL login;
 @property (nonatomic, strong) NSArray *userAuthArr;
 
 @end
@@ -42,6 +44,7 @@
 {
     [super viewDidLoad];
 
+    self.login = YES;
     [self loadVerifyCode];
 }
 
@@ -53,6 +56,8 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
+
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)closeBtnClick:(id)sender
@@ -65,38 +70,69 @@
 - (IBAction)loginBtnClick:(UIButton *)sender
 {
     [self.view endEditing:YES];
-
-    NSString *str = @"login";
+    WSFWeakSelf;
     NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
     [params setObject:self.userNameTextField.text forKey:@"UserName"];
     [params setObject:[self.passwordTextField.text MD5Digest] forKey:@"Password"];
     [params setObject:self.verifyCodeTextField.text forKey:@"VerifyCode"];
 
-    WSFWeakSelf;
-    [self.manager POST:str
-        parameters:params
-        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            NSNumber *status = responseObject[@"Status"];
-            NSLog(@"%@", status);
-            if (1 == [status intValue]) {
-                CBUserAuthModel *model = [CBUserAuthModel mj_objectWithKeyValues:responseObject];
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
-                [[NSUserDefaults standardUserDefaults] setObject:data forKey:CBUserAuth];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [SVProgressHUD showSuccessWithStatus:@"登录成功"];
-                dispatch_after(
-                    dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [weakSelf dismissViewControllerAnimated:YES completion:nil];
-                    });
+    if (self.isLogin) {
+        // 登录
+        NSString *url = @"login";
+
+        [self.manager POST:url
+            parameters:params
+            success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
+                if (1 == [responseObject[@"status"] intValue]) {
+                    CBUserAuthModel *model = [CBUserAuthModel mj_objectWithKeyValues:responseObject];
+                    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
+                    [[NSUserDefaults standardUserDefaults] setObject:data forKey:CBUserAuth];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+                    dispatch_after(
+                        dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                        });
+                }
+                else {
+                    [SVProgressHUD showErrorWithStatus:@"登录失败"];
+                    [weakSelf loadVerifyCode];
+                    self.verifyCodeTextField.text = @"";
+                }
             }
-            else {
-                [SVProgressHUD showErrorWithStatus:@"登录失败"];
+            failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
+                NSLog(@"%@", error);
+
+            }];
+    }
+    if (!self.isLogin) {
+        // 注册
+        NSString *url = @"register";
+        [params setObject:self.emailTextField.text forKey:@"Email"];
+
+        [self.manager POST:url
+            parameters:params
+            success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
+                NSLog(@"%@", responseObject);
+                if (1 == [responseObject[@"status"] intValue]) {
+                    [SVProgressHUD showSuccessWithStatus:@"注册成功\n请重新登录"];
+                    [weakSelf loadVerifyCode];
+                    [self registerBtnClick:self.accountBtn];
+                    self.verifyCodeTextField.text = @"";
+                }
+                if (0 == [responseObject[@"status"] intValue]) {
+                    [SVProgressHUD showErrorWithStatus:@"注册失败\n请重新输入"];
+                    [weakSelf loadVerifyCode];
+                    self.verifyCodeTextField.text = @"";
+                }
+            }
+            failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
+                NSLog(@"%@", error);
+                [SVProgressHUD showErrorWithStatus:@"注册失败\n请重新输入"];
                 [weakSelf loadVerifyCode];
-            }
-        }
-        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
-            NSLog(@"%@", error);
-        }];
+                self.verifyCodeTextField.text = @"";
+            }];
+    }
 }
 
 - (IBAction)refreshBtnClick:(id)sender
@@ -119,5 +155,22 @@
                                         }];
     [task resume];
 }
+
+- (IBAction)registerBtnClick:(id)sender
+{
+    self.login = !self.isLogin;
+
+    if (self.isLogin) {
+        [self.loginBtn setTitle:@"登  录" forState:UIControlStateNormal];
+        [sender setTitle:@"没有账号" forState:UIControlStateNormal];
+        self.emailTextField.placeholder = @"登录无需输入邮箱";
+    }
+    if (!self.isLogin) {
+        [self.loginBtn setTitle:@"注  册" forState:UIControlStateNormal];
+        [sender setTitle:@"已有账号" forState:UIControlStateNormal];
+        self.emailTextField.placeholder = @"注册需要输入邮箱";
+    }
+}
+
 
 @end

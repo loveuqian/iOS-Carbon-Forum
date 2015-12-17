@@ -14,8 +14,8 @@
 #import <UIKit/UIKit.h>
 #endif
 
-#define baseUrl @"https://api.94cb.com/"
-//#define baseUrl @"http://api.loveuqian.xyz/"
+//#define baseUrl @"https://api.94cb.com/"
+#define baseUrl @"http://api.loveuqian.xyz/"
 
 #define sKey @"12450"
 #define sSecret @"b40484df0ad979d8ba7708d24c301c38"
@@ -34,8 +34,11 @@
 
 #define WSFWeakSelf __weak typeof(self) weakSelf = self
 
-#define CBCommonBgColor [UIColor colorWithHex:@"21a1e2" andAlpha:1]
-#define CBCommonAlphaBgColor [UIColor colorWithHex:@"21a1e2" andAlpha:0.5]
+#define CBCommonBgColor [UIColor colorWithHex:@"eee" andAlpha:1]
+#define CBCommonAlphaBgColor [UIColor colorWithHex:@"eee" andAlpha:0.5]
+
+#define CBCommonColor [UIColor colorWithHex:@"21a1e2" andAlpha:1]
+#define CBCommonAlphaColor [UIColor colorWithHex:@"21a1e2" andAlpha:0.5]
 
 #define CBCommonTextColor [UIColor colorWithHex:@"333" andAlpha:1.0]
 #define CBCommonAlphaTextColor [UIColor colorWithHex:@"333" andAlpha:0.5]

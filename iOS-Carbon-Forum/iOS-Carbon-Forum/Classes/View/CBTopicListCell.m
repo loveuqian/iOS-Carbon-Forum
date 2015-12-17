@@ -24,9 +24,21 @@
     _model = model;
 
     self.topicLabel.text = model.Topic;
-    self.lastTimeLabel.text = [NSString stringWithFormat:@"回复: %@", model.LastTime];
+    self.topicLabel.textColor = CBCommonTextColor;
+
+    NSTimeInterval time = [model.LastTime doubleValue];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *destDateString = [dateFormatter stringFromDate:date];
+    self.lastTimeLabel.text = [NSString stringWithFormat:@"%@", destDateString];
+    self.lastTimeLabel.textColor = CBCommonDetailTextColor;
+
     self.userNameLabel.text = model.UserName;
+    self.userNameLabel.textColor = CBCommonDetailTextColor;
+
     self.repliesLabel.text = [NSString stringWithFormat:@"%@回", model.Replies];
+    self.repliesLabel.textColor = CBCommonDetailTextColor;
 
     [self layoutSubviews];
 }

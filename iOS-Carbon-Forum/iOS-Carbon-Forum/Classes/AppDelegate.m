@@ -10,6 +10,8 @@
 #import "CBNavigationController.h"
 #import "CBTopicListViewController.h"
 
+#import <SVProgressHUD.h>
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) CBNavigationController *navVC;
@@ -47,6 +49,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window.rootViewController = self.navVC;
+    
+    [SVProgressHUD setForegroundColor:[UIColor whiteColor]];
+    [SVProgressHUD setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
 
     return YES;
 }
