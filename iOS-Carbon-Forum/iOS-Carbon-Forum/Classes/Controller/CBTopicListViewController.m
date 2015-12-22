@@ -155,6 +155,7 @@
 
 - (void)setupPostButton
 {
+    //
     UIButton *postButton = [UIButton buttonWithType:UIButtonTypeCustom];
     postButton.backgroundColor = CBCommonColor;
     [postButton setBackgroundImage:[UIImage imageNamed:@"create_new"] forState:UIControlStateNormal];
