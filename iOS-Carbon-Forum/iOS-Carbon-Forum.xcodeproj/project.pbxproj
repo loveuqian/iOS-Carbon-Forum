@@ -33,6 +33,8 @@
 		37E6C43A1C11D55E0088F3C6 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 37E6C4391C11D55E0088F3C6 /* libxml2.2.tbd */; };
 		37E6C4A11C11ED500088F3C6 /* CBTopicInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E6C49F1C11ED500088F3C6 /* CBTopicInfoCell.m */; };
 		37E6C4A21C11ED500088F3C6 /* CBTopicInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37E6C4A01C11ED500088F3C6 /* CBTopicInfoCell.xib */; };
+		37E7F49D1C298C8E00765AEF /* CBPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E7F49B1C298C8E00765AEF /* CBPostViewController.m */; };
+		37E7F49E1C298C8E00765AEF /* CBPostViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37E7F49C1C298C8E00765AEF /* CBPostViewController.xib */; };
 		42E2A887D1C0713370F53462 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1E7B49B1EF0AC51D65162 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +85,9 @@
 		37E6C49E1C11ED500088F3C6 /* CBTopicInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBTopicInfoCell.h; sourceTree = "<group>"; };
 		37E6C49F1C11ED500088F3C6 /* CBTopicInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBTopicInfoCell.m; sourceTree = "<group>"; };
 		37E6C4A01C11ED500088F3C6 /* CBTopicInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CBTopicInfoCell.xib; sourceTree = "<group>"; };
+		37E7F49A1C298C8E00765AEF /* CBPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPostViewController.h; sourceTree = "<group>"; };
+		37E7F49B1C298C8E00765AEF /* CBPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPostViewController.m; sourceTree = "<group>"; };
+		37E7F49C1C298C8E00765AEF /* CBPostViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CBPostViewController.xib; sourceTree = "<group>"; };
 		5EB3E4DBE7B964CB573D3169 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A7256AEF365262D61E0554D3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,6 +201,9 @@
 				370723421C10901A00304C7D /* CBLoginViewController.h */,
 				370723431C10901A00304C7D /* CBLoginViewController.m */,
 				370723441C10901A00304C7D /* CBLoginViewController.xib */,
+				37E7F49A1C298C8E00765AEF /* CBPostViewController.h */,
+				37E7F49B1C298C8E00765AEF /* CBPostViewController.m */,
+				37E7F49C1C298C8E00765AEF /* CBPostViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -307,6 +315,7 @@
 				370723371C108C0D00304C7D /* CBNavigationController.xib in Resources */,
 				3787F3C71C0FF33800926AE4 /* CBTopicListViewController.xib in Resources */,
 				370723411C108DB300304C7D /* CBTopicInfoViewController.xib in Resources */,
+				37E7F49E1C298C8E00765AEF /* CBPostViewController.xib in Resources */,
 				3787F3CC1C0FF34E00926AE4 /* CBTopicListCell.xib in Resources */,
 				37E6C4A21C11ED500088F3C6 /* CBTopicInfoCell.xib in Resources */,
 				3787F33A1C0FDE1200926AE4 /* Assets.xcassets in Resources */,
@@ -372,6 +381,7 @@
 				3787F3551C0FEF2C00926AE4 /* AppDelegate.m in Sources */,
 				370723401C108DB300304C7D /* CBTopicInfoViewController.m in Sources */,
 				370723361C108C0D00304C7D /* CBNavigationController.m in Sources */,
+				37E7F49D1C298C8E00765AEF /* CBPostViewController.m in Sources */,
 				3787F48E1C119E1B00926AE4 /* CBUserAuthModel.m in Sources */,
 				3787F4911C119F0600926AE4 /* CBNetworkTool.m in Sources */,
 				3787F32F1C0FDE1200926AE4 /* main.m in Sources */,

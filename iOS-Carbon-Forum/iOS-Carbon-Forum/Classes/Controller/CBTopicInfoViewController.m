@@ -62,8 +62,6 @@
     [refreshButton sizeToFit];
     [refreshButton addTarget:self action:@selector(refreshButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
-
-    [self.navigationController.navigationBar setBarTintColor:CBCommonBgColor];
 }
 
 - (void)refreshButtonClick

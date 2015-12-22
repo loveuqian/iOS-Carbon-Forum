@@ -35,7 +35,7 @@
                         <action selector="loginBtnClick:" destination="-1" eventType="touchUpInside" id="3mv-Nf-ycW"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhD-Es-bdx">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhD-Es-bdx">
                     <rect key="frame" x="50" y="64" width="25" height="25"/>
                     <state key="normal" backgroundImage="setting_close"/>
                     <connections>

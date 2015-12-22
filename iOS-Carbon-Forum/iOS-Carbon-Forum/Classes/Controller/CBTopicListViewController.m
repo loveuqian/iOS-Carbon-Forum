@@ -12,6 +12,8 @@
 #import "CBTopicInfoViewController.h"
 #import "CBLoginViewController.h"
 #import "CBNetworkTool.h"
+#import "CBPostViewController.h"
+#import "CBNavigationController.h"
 
 #import <AFNetworking.h>
 #import <MJRefresh.h>
@@ -78,8 +80,6 @@
     [refreshButton sizeToFit];
     [refreshButton addTarget:self action:@selector(refreshButtonClick) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
-
-    [self.navigationController.navigationBar setBarTintColor:CBCommonBgColor];
 }
 
 - (void)loginButtonClick
@@ -155,20 +155,22 @@
 
 - (void)setupPostButton
 {
-    //
+    CGFloat margin = 80;
+
     UIButton *postButton = [UIButton buttonWithType:UIButtonTypeCustom];
     postButton.backgroundColor = CBCommonColor;
     [postButton setBackgroundImage:[UIImage imageNamed:@"create_new"] forState:UIControlStateNormal];
     [postButton addTarget:self action:@selector(postBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    postButton.frame = CGRectMake(mainScreenWidth - margin, mainScreenHeight - margin, 0, 0);
     [postButton sizeToFit];
-    postButton.x = 200;
-    postButton.y = 200;
     [[UIApplication sharedApplication].keyWindow addSubview:postButton];
 }
 
 - (void)postBtnClick
 {
-    NSLog(@"----- %s -----", __func__);
+    CBPostViewController *postVC = [[CBPostViewController alloc] init];
+    CBNavigationController *navVC = [[CBNavigationController alloc] initWithRootViewController:postVC];
+    [self presentViewController:navVC animated:YES completion:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
