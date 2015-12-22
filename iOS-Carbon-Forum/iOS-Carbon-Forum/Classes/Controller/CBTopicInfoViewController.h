@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) CBTopicListModel *model;
 
+@property (nonatomic, assign) CGFloat headerViewHeight;
+
 @end

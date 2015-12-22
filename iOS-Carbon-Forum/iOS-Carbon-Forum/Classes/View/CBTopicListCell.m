@@ -33,13 +33,10 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *destDateString = [dateFormatter stringFromDate:date];
     self.lastTimeLabel.text = [NSString stringWithFormat:@"%@", destDateString];
-    self.lastTimeLabel.textColor = CBCommonDetailTextColor;
 
     self.userNameLabel.text = model.UserName;
-    self.userNameLabel.textColor = CBCommonDetailTextColor;
 
     self.repliesLabel.text = [NSString stringWithFormat:@"%@回", model.Replies];
-    self.repliesLabel.textColor = CBCommonDetailTextColor;
 
     [self layoutSubviews];
 }

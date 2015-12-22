@@ -11,6 +11,7 @@
 #import "CBNetworkTool.h"
 #import "CBTopicInfoModel.h"
 #import "CBTopicInfoCell.h"
+#import "CBTopicListCell.h"
 
 #import <AFNetworking.h>
 #import <MJRefresh.h>
@@ -43,6 +44,8 @@
     [self setupNav];
 
     [self setupTableView];
+
+    [self setupTitle];
 }
 
 - (void)dealloc
@@ -53,6 +56,19 @@
 - (void)setupNav
 {
     self.title = @"Topic Info";
+
+    UIButton *refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [refreshButton setImage:[UIImage imageNamed:@"setting_refresh"] forState:UIControlStateNormal];
+    [refreshButton sizeToFit];
+    [refreshButton addTarget:self action:@selector(refreshButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:refreshButton];
+
+    [self.navigationController.navigationBar setBarTintColor:CBCommonBgColor];
+}
+
+- (void)refreshButtonClick
+{
+    [self.tableView.mj_header beginRefreshing];
 }
 
 - (void)setupTableView
@@ -73,11 +89,29 @@
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CBTopicInfoCell class]) bundle:nil]
          forCellReuseIdentifier:CBTopicInfoCellId];
-    
+}
+
+- (void)setupTitle
+{
+    CGFloat margin = 10;
+
     UILabel *label = [[UILabel alloc] init];
     label.text = self.model.Topic;
-    label.height = 44;
-    self.tableView.tableHeaderView = label;
+    label.font = [UIFont systemFontOfSize:16];
+    label.textColor = [UIColor whiteColor];
+    label.numberOfLines = 0;
+    CGFloat textH = [self.model.Topic boundingRectWithSize:CGSizeMake(mainScreenWidth, MAXFLOAT)
+                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                attributes:@{
+                                                    NSFontAttributeName : [UIFont systemFontOfSize:16],
+                                                } context:nil].size.height;
+    label.frame = CGRectMake(margin, margin, mainScreenWidth - 2 * margin, textH);
+
+    UIView *view = [[UIView alloc] init];
+    view.height = textH + 2 * margin;
+    view.backgroundColor = CBCommonColor;
+    [view addSubview:label];
+    self.tableView.tableHeaderView = view;
 }
 
 - (void)loadTopicInfo

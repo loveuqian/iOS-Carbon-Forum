@@ -25,6 +25,8 @@
 
 @property (nonatomic, assign) int page;
 
+@property (nonatomic, strong) UIButton *postButton;
+
 @end
 
 @implementation CBTopicListViewController
@@ -52,6 +54,8 @@
     [self setupNav];
 
     [self setupTableView];
+
+    [self setupPostButton];
 }
 
 - (void)dealloc
@@ -147,6 +151,23 @@
         failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
             [weakSelf.tableView.mj_footer endRefreshing];
         }];
+}
+
+- (void)setupPostButton
+{
+    UIButton *postButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    postButton.backgroundColor = CBCommonColor;
+    [postButton setBackgroundImage:[UIImage imageNamed:@"create_new"] forState:UIControlStateNormal];
+    [postButton addTarget:self action:@selector(postBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [postButton sizeToFit];
+    postButton.x = 200;
+    postButton.y = 200;
+    [[UIApplication sharedApplication].keyWindow addSubview:postButton];
+}
+
+- (void)postBtnClick
+{
+    NSLog(@"----- %s -----", __func__);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
