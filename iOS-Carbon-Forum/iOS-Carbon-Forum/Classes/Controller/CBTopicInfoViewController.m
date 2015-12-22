@@ -9,19 +9,18 @@
 #import "CBTopicInfoViewController.h"
 #import "CBTopicListModel.h"
 #import "CBNetworkTool.h"
-#import "CBPostModel.h"
+#import "CBTopicInfoModel.h"
 #import "CBTopicInfoCell.h"
 
 #import <AFNetworking.h>
 #import <MJRefresh.h>
 #import <MJExtension.h>
-#import <GONMarkupParser_All.h>
 
 @interface CBTopicInfoViewController ()
 
 @property (nonatomic, strong) CBNetworkTool *manager;
 
-@property (nonatomic, strong) NSMutableArray *postArr;
+@property (nonatomic, strong) NSMutableArray *topicInfoArr;
 
 @property (nonatomic, assign) int page;
 
@@ -53,7 +52,7 @@
 
 - (void)setupNav
 {
-    self.title = self.model.Topic;
+    self.title = @"Topic Info";
 }
 
 - (void)setupTableView
@@ -63,6 +62,7 @@
     self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     self.tableView.mj_header =
         [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadTopicInfo)];
@@ -73,6 +73,11 @@
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([CBTopicInfoCell class]) bundle:nil]
          forCellReuseIdentifier:CBTopicInfoCellId];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.text = self.model.Topic;
+    label.height = 44;
+    self.tableView.tableHeaderView = label;
 }
 
 - (void)loadTopicInfo
@@ -82,13 +87,12 @@
     self.page = 1;
     NSString *str = [NSString stringWithFormat:@"t/%@-%d", self.model.ID, self.page];
     NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
-    [params addEntriesFromDictionary:[NSMutableDictionary getUserAuthParams]];
 
     WSFWeakSelf;
     [self.manager GET:str
         parameters:params
         success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            weakSelf.postArr = [CBPostModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]];
+            weakSelf.topicInfoArr = [CBTopicInfoModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]];
             [weakSelf.tableView reloadData];
             [weakSelf.tableView.mj_header endRefreshing];
         }
@@ -105,35 +109,52 @@
     ++self.page;
     NSString *str = [NSString stringWithFormat:@"t/%@-%d", self.model.ID, self.page];
     NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
-    [params addEntriesFromDictionary:[NSMutableDictionary getUserAuthParams]];
 
     WSFWeakSelf;
     [self.manager GET:str
         parameters:params
         success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            [weakSelf.postArr
-                addObjectsFromArray:[CBPostModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]]];
+            [weakSelf.topicInfoArr
+                addObjectsFromArray:[CBTopicInfoModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]]];
             [weakSelf.tableView reloadData];
             [weakSelf.tableView.mj_footer endRefreshing];
         }
         failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
             NSLog(@"%@", error);
             [weakSelf.tableView.mj_footer endRefreshing];
+            weakSelf.tableView.mj_footer.hidden = YES;
         }];
 }
 
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    return self.model.Topic;
+//}
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UILabel *label = [[UILabel alloc] init];
+//    label.text = self.model.Topic;
+//    label.numberOfLines = 0;
+//    label.backgroundColor = CBCommonBgColor;
+//    return label;
+//}
+
+//- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 44.0;
+//}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.postArr.count;
+    return self.topicInfoArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CBTopicInfoCellId];
-    CBPostModel *model = self.postArr[indexPath.row];
-    [cell.textLabel setMarkedUpText:model.Content];
-    cell.textLabel.numberOfLines = 0;
-    cell.detailTextLabel.text = model.UserName;
+    CBTopicInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:CBTopicInfoCellId];
+    CBTopicInfoModel *model = self.topicInfoArr[indexPath.row];
+    cell.model = model;
 
     return cell;
 }

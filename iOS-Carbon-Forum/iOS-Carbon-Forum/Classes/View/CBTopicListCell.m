@@ -8,6 +8,7 @@
 
 #import "CBTopicListCell.h"
 #import "CBTopicListModel.h"
+
 @interface CBTopicListCell ()
 
 @property (weak, nonatomic) IBOutlet UILabel *topicLabel;

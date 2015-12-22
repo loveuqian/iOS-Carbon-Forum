@@ -6,5 +6,4 @@ pod "SDWebImage"
 pod "MJExtension"
 pod "MJRefresh"
 
-pod "GONMarkupParser"
 pod "SVProgressHUD"

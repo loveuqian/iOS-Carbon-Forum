@@ -45,6 +45,7 @@
     [super viewDidLoad];
 
     self.login = YES;
+    self.emailTextField.enabled = NO;
     [self loadVerifyCode];
 }
 
@@ -56,8 +57,6 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)closeBtnClick:(id)sender
@@ -105,6 +104,7 @@
 
             }];
     }
+    
     if (!self.isLogin) {
         // 注册
         NSString *url = @"register";
@@ -161,14 +161,18 @@
     self.login = !self.isLogin;
 
     if (self.isLogin) {
+        // 登录
         [self.loginBtn setTitle:@"登  录" forState:UIControlStateNormal];
         [sender setTitle:@"没有账号" forState:UIControlStateNormal];
         self.emailTextField.placeholder = @"登录无需输入邮箱";
+        self.emailTextField.enabled = NO;
     }
     if (!self.isLogin) {
+        // 注册
         [self.loginBtn setTitle:@"注  册" forState:UIControlStateNormal];
         [sender setTitle:@"已有账号" forState:UIControlStateNormal];
         self.emailTextField.placeholder = @"注册需要输入邮箱";
+        self.emailTextField.enabled = YES;
     }
 }
 

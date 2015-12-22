@@ -61,7 +61,7 @@
 
 - (void)setupNav
 {
-    self.title = @"主题";
+    self.title = @"Topic List";
 
     UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [loginButton setImage:[UIImage imageNamed:@"setting_personal"] forState:UIControlStateNormal];
@@ -93,7 +93,7 @@
 {
     self.tableView.backgroundColor = CBCommonBgColor;
 
-    self.tableView.estimatedRowHeight = 200;
+    self.tableView.estimatedRowHeight = 100;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -124,8 +124,8 @@
             [weakSelf.tableView.mj_header endRefreshing];
         }
         failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
-            [weakSelf.tableView.mj_header endRefreshing];
             NSLog(@"%@", error);
+            [weakSelf.tableView.mj_header endRefreshing];
         }];
 }
 

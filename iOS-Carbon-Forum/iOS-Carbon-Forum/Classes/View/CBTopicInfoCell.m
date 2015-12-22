@@ -7,17 +7,25 @@
 //
 
 #import "CBTopicInfoCell.h"
+#import "CBTopicInfoModel.h"
+
+@interface CBTopicInfoCell ()
+
+@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *postTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+
+@end
 
 @implementation CBTopicInfoCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)setModel:(CBTopicInfoModel *)model
+{
+    _model = model;
+    
+    self.contentLabel.text = model.Content;
+    self.postTimeLabel.text = model.PostTime;
+    self.userNameLabel.text = model.UserName;
 }
 
 @end

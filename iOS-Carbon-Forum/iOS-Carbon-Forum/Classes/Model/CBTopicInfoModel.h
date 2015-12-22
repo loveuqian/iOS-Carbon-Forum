@@ -1,14 +1,14 @@
 //
-//  CBPostModel.h
+//  CBTopicInfoModel.h
 //  iOS-Carbon-Forum
 //
-//  Created by WangShengFeng on 15/12/4.
+//  Created by WangShengFeng on 15/12/22.
 //  Copyright © 2015年 WangShengFeng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface CBPostModel : NSObject
+@interface CBTopicInfoModel : NSObject
 
 @property (nonatomic, copy) NSString *Content;
 
