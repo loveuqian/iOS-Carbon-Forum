@@ -23,6 +23,7 @@
 
 - (void)setupNav
 {
+    //
     self.title = @"Post";
 
     UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
