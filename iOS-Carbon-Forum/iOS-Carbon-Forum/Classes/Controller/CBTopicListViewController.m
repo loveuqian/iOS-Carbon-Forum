@@ -60,6 +60,26 @@
     [self setupPostButton];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         self.postButton.alpha = 1.0;
+                     }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         self.postButton.alpha = 0;
+                     }];
+}
+
 - (void)dealloc
 {
     [self.manager.operationQueue cancelAllOperations];
@@ -155,14 +175,15 @@
 
 - (void)setupPostButton
 {
-    CGFloat margin = 80;
-
     UIButton *postButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    postButton.backgroundColor = CBCommonColor;
     [postButton setBackgroundImage:[UIImage imageNamed:@"create_new"] forState:UIControlStateNormal];
     [postButton addTarget:self action:@selector(postBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [postButton sizeToFit];
+    CGFloat margin = postButton.width;
     postButton.frame = CGRectMake(mainScreenWidth - margin, mainScreenHeight - margin, 0, 0);
     [postButton sizeToFit];
+
+    self.postButton = postButton;
     [[UIApplication sharedApplication].keyWindow addSubview:postButton];
 }
 

@@ -19,6 +19,9 @@
     [super viewDidLoad];
 
     self.interactivePopGestureRecognizer.delegate = self;
+
+    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_backGround"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationBar setShadowImage:[UIImage imageNamed:@"nav_shadow"]];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
