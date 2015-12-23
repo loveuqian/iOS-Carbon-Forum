@@ -10,4 +10,6 @@
 
 @interface CBPostViewController : UIViewController
 
+@property (nonatomic, copy) NSString *titleText;
+
 @end

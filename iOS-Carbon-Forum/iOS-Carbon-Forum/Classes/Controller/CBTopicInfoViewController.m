@@ -12,6 +12,8 @@
 #import "CBTopicInfoModel.h"
 #import "CBTopicInfoCell.h"
 #import "CBTopicListCell.h"
+#import "CBPostViewController.h"
+#import "CBNavigationController.h"
 
 #import <AFNetworking.h>
 #import <MJRefresh.h>
@@ -24,6 +26,8 @@
 @property (nonatomic, strong) NSMutableArray *topicInfoArr;
 
 @property (nonatomic, assign) int page;
+
+@property (nonatomic, weak) UIButton *postButton;
 
 @end
 
@@ -46,6 +50,28 @@
     [self setupTableView];
 
     [self setupTitle];
+
+    [self setupPostButton];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         self.postButton.alpha = 1.0;
+                     }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         self.postButton.alpha = 0;
+                     }];
 }
 
 - (void)dealloc
@@ -89,6 +115,52 @@
          forCellReuseIdentifier:CBTopicInfoCellId];
 }
 
+- (void)loadTopicInfo
+{
+    [self.manager.operationQueue cancelAllOperations];
+
+    self.page = 1;
+    NSString *urlStr = [NSString stringWithFormat:@"t/%@-%d", self.model.ID, self.page];
+    NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
+
+    WSFWeakSelf;
+    [self.manager GET:urlStr
+        parameters:params
+        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
+            weakSelf.topicInfoArr = [CBTopicInfoModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]];
+            [weakSelf.tableView reloadData];
+            [weakSelf.tableView.mj_header endRefreshing];
+        }
+        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
+            NSLog(@"%@", error);
+            [weakSelf.tableView.mj_header endRefreshing];
+        }];
+}
+
+- (void)loadMoreTopicInfo
+{
+    [self.manager.operationQueue cancelAllOperations];
+
+    ++self.page;
+    NSString *urlStr = [NSString stringWithFormat:@"t/%@-%d", self.model.ID, self.page];
+    NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
+
+    WSFWeakSelf;
+    [self.manager GET:urlStr
+        parameters:params
+        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
+            [weakSelf.topicInfoArr
+                addObjectsFromArray:[CBTopicInfoModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]]];
+            [weakSelf.tableView reloadData];
+            [weakSelf.tableView.mj_footer endRefreshing];
+        }
+        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
+            NSLog(@"%@", error);
+            [weakSelf.tableView.mj_footer endRefreshing];
+            weakSelf.tableView.mj_footer.hidden = YES;
+        }];
+}
+
 - (void)setupTitle
 {
     CGFloat margin = 10;
@@ -112,70 +184,27 @@
     self.tableView.tableHeaderView = view;
 }
 
-- (void)loadTopicInfo
+- (void)setupPostButton
 {
-    [self.manager.operationQueue cancelAllOperations];
+    UIButton *postButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [postButton setBackgroundImage:[UIImage imageNamed:@"create_new"] forState:UIControlStateNormal];
+    [postButton addTarget:self action:@selector(postBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [postButton sizeToFit];
+    CGFloat margin = postButton.width;
+    postButton.frame = CGRectMake(mainScreenWidth - margin, mainScreenHeight - margin, 0, 0);
+    [postButton sizeToFit];
 
-    self.page = 1;
-    NSString *str = [NSString stringWithFormat:@"t/%@-%d", self.model.ID, self.page];
-    NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
-
-    WSFWeakSelf;
-    [self.manager GET:str
-        parameters:params
-        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            weakSelf.topicInfoArr = [CBTopicInfoModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]];
-            [weakSelf.tableView reloadData];
-            [weakSelf.tableView.mj_header endRefreshing];
-        }
-        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
-            NSLog(@"%@", error);
-            [weakSelf.tableView.mj_header endRefreshing];
-        }];
+    self.postButton = postButton;
+    [[UIApplication sharedApplication].keyWindow addSubview:postButton];
 }
 
-- (void)loadMoreTopicInfo
+- (void)postBtnClick
 {
-    [self.manager.operationQueue cancelAllOperations];
-
-    ++self.page;
-    NSString *str = [NSString stringWithFormat:@"t/%@-%d", self.model.ID, self.page];
-    NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
-
-    WSFWeakSelf;
-    [self.manager GET:str
-        parameters:params
-        success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            [weakSelf.topicInfoArr
-                addObjectsFromArray:[CBTopicInfoModel mj_objectArrayWithKeyValuesArray:responseObject[@"PostsArray"]]];
-            [weakSelf.tableView reloadData];
-            [weakSelf.tableView.mj_footer endRefreshing];
-        }
-        failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
-            NSLog(@"%@", error);
-            [weakSelf.tableView.mj_footer endRefreshing];
-            weakSelf.tableView.mj_footer.hidden = YES;
-        }];
+    CBPostViewController *postVC = [[CBPostViewController alloc] init];
+    postVC.titleText = @"Reply";
+    CBNavigationController *navVC = [[CBNavigationController alloc] initWithRootViewController:postVC];
+    [self presentViewController:navVC animated:YES completion:nil];
 }
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    return self.model.Topic;
-//}
-
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UILabel *label = [[UILabel alloc] init];
-//    label.text = self.model.Topic;
-//    label.numberOfLines = 0;
-//    label.backgroundColor = CBCommonBgColor;
-//    return label;
-//}
-
-//- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 44.0;
-//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

@@ -27,7 +27,7 @@
 
 @property (nonatomic, assign) int page;
 
-@property (nonatomic, strong) UIButton *postButton;
+@property (nonatomic, weak) UIButton *postButton;
 
 @end
 
@@ -64,7 +64,7 @@
 {
     [super viewWillAppear:animated];
 
-    [UIView animateWithDuration:1.0
+    [UIView animateWithDuration:0.5
                      animations:^{
                          self.postButton.alpha = 1.0;
                      }];
@@ -74,7 +74,7 @@
 {
     [super viewWillDisappear:animated];
 
-    [UIView animateWithDuration:1.0
+    [UIView animateWithDuration:0.5
                      animations:^{
                          self.postButton.alpha = 0;
                      }];
@@ -105,7 +105,8 @@
 - (void)loginButtonClick
 {
     CBLoginViewController *loginVC = [[CBLoginViewController alloc] init];
-    [self presentViewController:loginVC animated:YES completion:nil];
+    CBNavigationController *navVC = [[CBNavigationController alloc] initWithRootViewController:loginVC];
+    [self presentViewController:navVC animated:YES completion:nil];
 }
 
 - (void)refreshButtonClick
@@ -138,9 +139,10 @@
     [self.manager.operationQueue cancelAllOperations];
 
     self.page = 1;
-    NSString *str = [NSString stringWithFormat:@"page/%d", self.page];
+    NSString *urlStr = [NSString stringWithFormat:@"page/%d", self.page];
+    
     WSFWeakSelf;
-    [self.manager GET:str
+    [self.manager GET:urlStr
         parameters:[NSMutableDictionary getAPIAuthParams]
         success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
             weakSelf.topicListArr = [CBTopicListModel mj_objectArrayWithKeyValuesArray:responseObject[@"TopicsArray"]];
@@ -158,9 +160,9 @@
     [self.manager.operationQueue cancelAllOperations];
 
     ++self.page;
-    NSString *str = [NSString stringWithFormat:@"page/%d", self.page];
+    NSString *urlStr = [NSString stringWithFormat:@"page/%d", self.page];
     WSFWeakSelf;
-    [self.manager GET:str
+    [self.manager GET:urlStr
         parameters:[NSMutableDictionary getAPIAuthParams]
         success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
             NSArray *newArr = [CBTopicListModel mj_objectArrayWithKeyValuesArray:responseObject[@"TopicsArray"]];
@@ -190,6 +192,7 @@
 - (void)postBtnClick
 {
     CBPostViewController *postVC = [[CBPostViewController alloc] init];
+    postVC.titleText = @"New";
     CBNavigationController *navVC = [[CBNavigationController alloc] initWithRootViewController:postVC];
     [self presentViewController:navVC animated:YES completion:nil];
 }
