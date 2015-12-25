@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum : NSUInteger {
+    CBNew,
+    CBReply,
+} CBPostSetting;
+
 @interface CBPostViewController : UIViewController
 
 @property (nonatomic, copy) NSString *titleText;
+
+@property (nonatomic, assign) CBPostSetting *postSetting;
 
 @end

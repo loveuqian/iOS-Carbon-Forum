@@ -15,9 +15,11 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *titleTextView;
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+@property (weak, nonatomic) IBOutlet UITextView *tagTextView;
 
 @property (nonatomic, weak) UILabel *titlePlaceHolder;
 @property (nonatomic, weak) UILabel *contentPlaceHolder;
+@property (nonatomic, weak) UILabel *tagPlaceHolder;
 
 @property (nonatomic, strong) CBNetworkTool *manager;
 
@@ -43,7 +45,11 @@
     self.titleTextView.delegate = self;
     self.contentTextView.tintColor = CBCommonColor;
     self.contentTextView.delegate = self;
+    self.tagTextView.tintColor = CBCommonColor;
+    self.tagTextView.delegate = self;
     [self setupPlaceHolder];
+
+    [self setupPostSetting];
 }
 
 - (void)dealloc
@@ -96,15 +102,15 @@
     //    [params setObject:self.contentTextView.text forKey:@"Content"];
     NSLog(@"%@", params);
 
-    WSFWeakSelf;
     [self.manager POST:urlStr
         parameters:params
         success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
             NSLog(@"%@", responseObject);
             [SVProgressHUD showSuccessWithStatus:@"发布成功"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                <#code to be executed after a specified delay#>
-            });
+            dispatch_after(
+                dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+                                                                                 });
         }
         failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
             NSLog(@"%@", error);
@@ -122,6 +128,16 @@
 
     self.titlePlaceHolder = titlePlaceHolder;
     [self.titleTextView addSubview:titlePlaceHolder];
+
+    UILabel *tagPlaceHolder = [[UILabel alloc] init];
+    tagPlaceHolder.text = @"请输入标签";
+    tagPlaceHolder.font = [UIFont systemFontOfSize:14];
+    tagPlaceHolder.textColor = CBCommonDetailTextColor;
+    tagPlaceHolder.frame = CGRectMake(5, 8, 0, 0);
+    [tagPlaceHolder sizeToFit];
+
+    self.tagPlaceHolder = tagPlaceHolder;
+    [self.tagTextView addSubview:tagPlaceHolder];
 
     UILabel *contentPlaceHolder = [[UILabel alloc] init];
     contentPlaceHolder.text = @"请输入内容";
@@ -153,6 +169,20 @@
             self.contentPlaceHolder.alpha = 1;
         }
     }
+
+    if (textView == self.tagTextView) {
+        if (textView.text.length) {
+            self.tagPlaceHolder.alpha = 0;
+        }
+        if (!textView.text.length) {
+            self.tagPlaceHolder.alpha = 1;
+        }
+    }
+}
+
+- (void)setupPostSetting
+{
+    //
 }
 
 @end
