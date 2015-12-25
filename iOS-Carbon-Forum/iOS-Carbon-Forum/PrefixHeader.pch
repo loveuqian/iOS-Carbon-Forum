@@ -14,8 +14,8 @@
 #import <UIKit/UIKit.h>
 #endif
 
-#define baseUrl @"https://api.94cb.com/"
-//#define baseUrl @"http://api.loveuqian.xyz/"
+//#define baseUrl @"https://api.94cb.com/"
+#define baseUrl @"http://api.loveuqian.xyz/"
 
 #define sKey @"12450"
 #define sSecret @"b40484df0ad979d8ba7708d24c301c38"
