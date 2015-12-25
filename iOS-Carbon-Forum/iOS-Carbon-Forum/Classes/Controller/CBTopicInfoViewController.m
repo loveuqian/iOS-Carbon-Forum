@@ -57,6 +57,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self loadTopicInfo];
 
     [UIView animateWithDuration:0.5
                      animations:^{
@@ -202,6 +204,8 @@
 {
     CBPostViewController *postVC = [[CBPostViewController alloc] init];
     postVC.titleText = @"Reply";
+    postVC.postSetting = CBReply;
+    postVC.TopicID = self.model.ID;
     CBNavigationController *navVC = [[CBNavigationController alloc] initWithRootViewController:postVC];
     [self presentViewController:navVC animated:YES completion:nil];
 }

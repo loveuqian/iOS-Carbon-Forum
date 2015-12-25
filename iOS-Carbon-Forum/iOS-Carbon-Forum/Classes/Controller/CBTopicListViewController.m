@@ -64,6 +64,8 @@
 {
     [super viewWillAppear:animated];
 
+    [self loadTopicList];
+    
     [UIView animateWithDuration:0.5
                      animations:^{
                          self.postButton.alpha = 1.0;
@@ -193,6 +195,7 @@
 {
     CBPostViewController *postVC = [[CBPostViewController alloc] init];
     postVC.titleText = @"New";
+    postVC.postSetting = CBNew;
     CBNavigationController *navVC = [[CBNavigationController alloc] initWithRootViewController:postVC];
     [self presentViewController:navVC animated:YES completion:nil];
 }

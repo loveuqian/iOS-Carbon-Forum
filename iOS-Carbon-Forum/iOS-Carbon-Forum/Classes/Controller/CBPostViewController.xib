@@ -9,7 +9,11 @@
             <connections>
                 <outlet property="contentTextView" destination="5Ga-F3-0TU" id="NAd-7r-7oM"/>
                 <outlet property="tagTextView" destination="SWR-fL-fKz" id="DCb-bz-Unv"/>
+                <outlet property="tagViewHeight" destination="He0-b9-Qta" id="LH1-cA-GJC"/>
+                <outlet property="tagViewTop" destination="ez4-oy-cpe" id="gx3-xP-OKh"/>
                 <outlet property="titleTextView" destination="yln-Xn-l6I" id="456-ts-rcH"/>
+                <outlet property="titleViewHeight" destination="0iK-0f-bhC" id="4uD-oh-ERX"/>
+                <outlet property="titleViewTop" destination="cMV-uV-PRt" id="K5a-Mr-Z5z"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,16 +27,10 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="0iK-0f-bhC"/>
-                        <constraint firstAttribute="height" constant="128" id="hPP-CU-4kc"/>
                     </constraints>
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="hPP-CU-4kc"/>
-                        </mask>
-                    </variation>
                 </textView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SWR-fL-fKz">
                     <rect key="frame" x="10" y="66" width="355" height="50"/>

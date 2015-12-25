@@ -23,6 +23,11 @@
 
 @property (nonatomic, strong) CBNetworkTool *manager;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleViewTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleViewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tagViewTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tagViewHeight;
+
 @end
 
 @implementation CBPostViewController
@@ -50,6 +55,13 @@
     [self setupPlaceHolder];
 
     [self setupPostSetting];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self.contentTextView becomeFirstResponder];
 }
 
 - (void)dealloc
@@ -81,36 +93,57 @@
 
 - (void)closeBtnClick
 {
+    [self.view endEditing:YES];
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)postBtnClick
 {
-    if (!self.titleTextView.text.length || !self.contentTextView.text.length) {
-        // 空判断
-        [SVProgressHUD showErrorWithStatus:@"请输入内容"];
-        return;
+    if (self.postSetting == CBNew) {
+        if (!self.titleTextView.text.length || !self.contentTextView.text.length || !self.tagTextView.text.length) {
+            // 空判断
+            [SVProgressHUD showErrorWithStatus:@"请输入内容"];
+            return;
+        }
+    }
+    if (self.postSetting == CBReply) {
+        if (!self.contentTextView.text.length) {
+            [SVProgressHUD showErrorWithStatus:@"请输入内容"];
+            return;
+        }
     }
 
+    [self.view endEditing:YES];
     [self.manager.operationQueue cancelAllOperations];
 
-    NSString *urlStr = @"new";
+    NSString *urlStr;
+    if (self.postSetting == CBNew) {
+        urlStr = @"new";
+    }
+    if (self.postSetting == CBReply) {
+        urlStr = @"reply";
+    }
     NSMutableDictionary *params = [NSMutableDictionary getAPIAuthParams];
     [params setValuesForKeysWithDictionary:[NSMutableDictionary getUserAuthParams]];
-    [params setObject:self.titleTextView.text forKey:@"Title"];
-    [params setObject:self.contentTextView.text forKey:@"Tag[]"];
-    //    [params setObject:self.contentTextView.text forKey:@"Content"];
-    NSLog(@"%@", params);
+    if (self.postSetting == CBNew) {
+        [params setObject:self.titleTextView.text forKey:@"Title"];
+        [params setObject:self.contentTextView.text forKey:@"Tag[]"];
+        [params setObject:self.contentTextView.text forKey:@"Content"];
+    }
+    if (self.postSetting == CBReply) {
+        [params setObject:self.TopicID forKey:@"TopicID"];
+        [params setObject:self.contentTextView.text forKey:@"Content"];
+    }
 
     [self.manager POST:urlStr
         parameters:params
         success:^(NSURLSessionDataTask *_Nonnull task, id _Nonnull responseObject) {
-            NSLog(@"%@", responseObject);
             [SVProgressHUD showSuccessWithStatus:@"发布成功"];
             dispatch_after(
                 dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-
-                                                                                 });
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                });
         }
         failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
             NSLog(@"%@", error);
@@ -182,7 +215,17 @@
 
 - (void)setupPostSetting
 {
-    //
+    if (self.postSetting == CBNew) {
+        // 发帖
+    }
+
+    if (self.postSetting == CBReply) {
+        // 回帖
+        self.titleViewTop.constant = 0;
+        self.titleViewHeight.constant = 0;
+        self.tagViewTop.constant = 0;
+        self.tagViewHeight.constant = 0;
+    }
 }
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum : NSUInteger {
+typedef enum {
     CBNew,
     CBReply,
 } CBPostSetting;
@@ -17,6 +17,8 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, copy) NSString *titleText;
 
-@property (nonatomic, assign) CBPostSetting *postSetting;
+@property (nonatomic, assign) CBPostSetting postSetting;
+
+@property (nonatomic, copy) NSString *TopicID;
 
 @end

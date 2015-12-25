@@ -50,6 +50,13 @@
     [self setupNav];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self.userNameTextField becomeFirstResponder];
+}
+
 - (void)dealloc
 {
     [self.manager.operationQueue cancelAllOperations];
